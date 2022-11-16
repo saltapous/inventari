@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Nova unitat</h1>
+        <p></p>
+        <p></p>
+        <div class="col-6 offset-3">
+            <form action="/unitats" method="POST" novalidate class="validated-form">
+
+                <div class="mb-3">
+                    <label class="form-label" for="nom">Nom Unitat</label>
+                    <input class="form-control" type="text" id="nom" name="unitat[nom]" required>
+                    <div class="valid-feedback">Sembla correcte!</div>
+                </div>
+
+                <select class="form-select mb-3" aria-label="tipus" name="unitat[zona]" required>
+                    <option selected>Escull una zona</option>
+                    <option value="edifici_principal">Edifici Principal</option>
+                    <option value="edifici_enologia">Edifici Enologia</option>
+                    <option value="gimnas">Gimnàs</option>
+                    <option value="esbarjo">Esbarjo</option>
+                    <option value="instal·lacions_vinya">Instal·lacions/Vinya</option>
+                </select>
+
+                <select class="form-select mb-3" aria-label="tipus" name="unitat[planta]" required>
+                    <option selected>Escull una planta</option>
+                    <option value="soterrani">Soterrani</option>
+                    <option value="baixa">Planta baixa</option>
+                    <option value="primera">Primer pis</option>
+                    <option value="segona">Segon pis</option>
+                    <option value="tercera">Tercer Pis</option>
+                    <option value="terrat">Terrat</option>
+                </select>
+
+                <select class="form-select mb-3" aria-label="tipus" name="unitat[area]" required>
+                    <option selected>Escull una àrea</option>
+                    <option value="soterrani">Docent-Alumnes</option>
+                    <option value="baixa">Departaments-Despatxos-Professors</option>
+                    <option value="primera">Magatzems i Despatxos Operatius</option>
+                    <option value="terrat">WC</option>
+                </select>
+
+                <div class="mb-3">
+                    <button class="btn btn-success">Afegeix Unitat</button>
+                </div>
+            </form>
+            <a href="/unitats">Totes les Unitats</a>
+        </div>
+    </div>

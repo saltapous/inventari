@@ -1,0 +1,260 @@
+<% layout('layouts/boilerplate')%>
+
+    
+    <body>
+        <h1>Nova adquisició</h1>
+        <p></p>
+        <p></p>
+        <form id="proformForm">
+            
+            <input type="hidden" class="col-1" name="naturalesaPre" id="naturalesaPre" placeholder="naturalesa">
+            <input type="hidden" class="col-1" name="tipusPre" id="tipusPre" placeholder="tipus">
+
+
+<!--             <select class="col-2"  name="invoicePre" id="invoicePre">
+                <option selected disabled>Article</option>
+            </select> -->
+            <input type="text" id="invoicePre" name="invoicePre" placeholder="Article" required />
+
+<!--
+            <input type="text" class="col-2" name="invoicePre" id="invoicePre" placeholder="Nom"> 
+            -->
+            <input type="number" class="col-1" name="quantitatPre" id="quantitatPre" placeholder="Quantitat" required>
+            <input type="number" class="col-1" step="0.01" name="preuPre" id="preuPre" placeholder="Preu" required>
+            <input type="number" class="col-1" step="0.01" name="ivaPre" id="ivaPre" placeholder="IVA" required>
+            <input type="text" class="col-2" name="unitatPre" id="unitatPre" placeholder="Unitat de destí" required>
+            <button id="relative" class="btn btn-primary">Afegir a la comanda</button>
+        </form>
+        <div class="table-responsive-lg">
+            <table class="table" id="table">
+                <p></p>
+                <p></p>
+                <p class="h6">línies de comanda</p>
+                <table>
+                    <div class="h5">
+                        Total Comanda..... <span class="sumatori-total">0,00€</span>
+                    </div>
+                </table>
+            </table>
+        </div>
+
+<input type="hidden" id="nom" name="invoice[nom]">
+            <input type="hidden" id="preu" name="invoice[preu]">
+            <input type="hidden" id="unitat" name="invoice[unitat]">
+            <input type="hidden" id="naturalesa" name="invoice[naturalesa]">
+
+
+        <form action="/invoices" method="POST" novalidate class="validated-form">
+
+            
+            <input type="hidden" id="albara" name="invoice[invoice]">
+
+
+
+            <script>
+                const albara = [];
+                const proformForm = document.querySelector('#proformForm');
+                const table = document.querySelector('#table');
+                var id = 0;
+                let totalGeneral = 0;
+                let liniesResultats = [];
+
+                // New row submit handler
+                proformForm.addEventListener('submit', submitRowHandler);
+
+                // Submit handler callback
+                function submitRowHandler(e) {
+                    e.preventDefault();
+                    const naturalesaInput = proformForm.elements.naturalesaPre;
+                    const tipusInput = proformForm.elements.tipusPre;
+                    const invoiceInput = proformForm.elements.invoicePre;
+                    const quantitatInput = proformForm.elements.quantitatPre;
+                    const preuInput = proformForm.elements.preuPre;
+                    const ivaInput = proformForm.elements.ivaPre;
+                    const unitatInput = proformForm.elements.unitatPre;
+                    
+
+const liniaAenviar = [naturalesaInput.value, tipusInput.value,invoiceInput.value,quantitatInput.value,preuInput.value,ivaInput.value, unitatInput.value];
+albara.push(liniaAenviar);
+
+
+
+
+
+                    // Afegim nou row i retornem row
+                    const row = addRow(naturalesaInput.value, tipusInput.value, invoiceInput.value, new Number(quantitatInput.value), new Number(preuInput.value), new Number(ivaInput.value), unitatInput.value);
+
+                    // Row click listener -> Delete row
+                    row.addEventListener('click', () => {
+                        // Delete row
+                        deleteRow(row, liniesResultats)
+
+                        // Update totals element
+                        const formTotal = getFormTotal(liniesResultats)
+                        updateTotalsTable(formTotal)
+                    })
+
+                    // Agafa el total de la fila
+                    const totalLinia = getRowTotal(quantitatInput.value, preuInput.value, ivaInput.value)
+
+
+                    // Push el total de la fila al totalLinia
+                    liniesResultats.push(totalLinia)
+
+
+                    // Get el total de totes les files al formulari
+                    const formTotal = getFormTotal(liniesResultats)
+
+
+                    updateTotalsTable(formTotal)
+
+                    // Reset values
+                    naturalesaInput.value = '';
+                    tipusInput.value = '';
+                    invoiceInput.value = '';
+                    quantitatInput.value = '';
+                    preuInput.value = '';
+                    ivaInput.value = '';
+                    unitatInput.value ='';
+                }
+
+                function updateTotalsTable(formTotal) {
+                    const totalsEl = document.querySelector('.sumatori-total')
+                    totalsEl.innerText = formTotal
+                }
+
+                function addRow(naturalesa, tipus, invoice, quantitat, preu, iva, unitat, subtotalLinia) {
+                    const row = table.insertRow();
+                    row.setAttribute('id', id);
+
+
+
+                    document.querySelector('#nom').value = invoice;
+                    document.querySelector('#preu').value = new Number(preu);
+                    document.querySelector('#unitat').value = unitat;
+                    document.querySelector('#naturalesa').value = naturalesa;
+                    document.querySelector('#albara').value = JSON.stringify(albara);
+
+
+
+                    //const cellNaturalesa = row.insertCell();
+                    //const cellTipus = row.insertCell();
+                    const cellInvoice = row.insertCell();
+
+
+
+
+
+
+
+
+                    const cellQuantitat = row.insertCell();
+                    const cellPreu = row.insertCell();
+                    const cellIva = row.insertCell();
+                    const cellsubtotalLinia = row.insertCell();
+                    const cellUnitat = row.insertCell();
+
+                    //cellNaturalesa.innerText = naturalesa;
+                    //cellTipus.innerText = tipus;
+                    cellInvoice.innerText = invoice;
+
+
+
+                    cellQuantitat.innerText = quantitat;
+                    cellPreu.innerText = preu;
+                    cellIva.innerText = iva;
+                    cellUnitat.innerText = unitat;
+
+                    const totalLinia = getRowTotal(quantitat, preu, iva)
+                    cellsubtotalLinia.innerText = totalLinia;
+                    id++
+                    return row
+                }
+
+                function getRowTotal(quantitat, preu, iva) {
+                    const totalLinia = new Number(quantitat * preu * (1 + iva / 100));
+                    return totalLinia
+                }
+
+                function getFormTotal(liniesResultats) {
+                    let sumatoriTotal = 0
+                    for (let sumatori of liniesResultats) {
+                        sumatoriTotal = sumatoriTotal + sumatori;
+                    }
+                    return (`${sumatoriTotal}€ (IVA inclòs)`);
+                }
+
+                function deleteRow(row, liniesResultats) {
+                    // Delete row from albara form field
+                    const albaraInputEl = document.querySelector('#albara')
+                    const albaraValueArr = JSON.parse(albaraInputEl.value)
+                    const albaraValueArrNew = albaraValueArr.filter((_, index) => index !== row.rowIndex)
+                    albaraInputEl.value = JSON.stringify(albaraValueArrNew)
+
+                    // Delete row from DOM
+                    table.deleteRow(row.rowIndex);
+                    subtotalEsborrat = liniesResultats[row.id];
+                    liniesResultats[row.id] = 0;
+                }
+            </script>
+
+            <div class="mb-3">
+                <button class="btn btn-success">Afegeix Comanda</button>
+            </div>
+
+        </form>
+        </body>
+
+<script>
+    
+    const itemsInputEl = document.querySelector('#invoicePre')
+    const _autocomplete = <%- autocomplete %>
+
+    fetch('/items/all')
+        .then(res => res.json())
+        .then(items => {
+            _autocomplete({
+                input: itemsInputEl,
+                fetch: function(text, update) {
+                    text = text.toLowerCase();
+                    // you can also use AJAX requests instead of preloaded data
+                    var suggestions = items.filter(item => item.nom.toLowerCase().includes(text))
+                    update(suggestions);
+                },
+                onSelect: function(suggestion) {
+                    const naturalesaInputEl = document.querySelector('#naturalesaPre')
+                    const tipusInputEl = document.querySelector('#tipusPre')
+                    const { nom, naturalesa, tipus } = suggestion
+                    this.input.value = nom;
+                    naturalesaInputEl.value = naturalesa
+                    tipusInputEl.value = tipus
+                },
+                render: function(suggestion, currentInput) {
+                    if (suggestion) {
+                        const nom = suggestion.nom
+                        const div = document.createElement('div')
+                        div.setAttribute("id", "autocomplete");
+                        div.textContent = nom
+                        return div
+                    }
+                }
+            });
+        })
+        .catch(e => window.alert('No hi ha items encara'))
+
+
+
+    // function populateItems (items) {
+    //     // Get Items select El
+    //     const itemsSelectEl = document.querySelector('#invoicePre')
+    //     // Create Item option Els
+    //     for (let item of items) {
+    //         const itemOptionEl = document.createElement('option')
+    //         itemOptionEl.value = item.nom
+    //         itemOptionEl.innerText = item.nom
+
+    //         // Populate options inside Items Select El
+    //         itemsSelectEl.append(itemOptionEl)
+    //     }
+    // }
+</script>

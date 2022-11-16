@@ -10,7 +10,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash('error', "Has d'estar connectat/da");
         return res.redirect('/login');
     }
-    next();
+    next(); next()
 }
 
 

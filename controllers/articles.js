@@ -1,4 +1,3 @@
-
 const Article = require('../models/article');
 module.exports.index = async (req, res) => {
 

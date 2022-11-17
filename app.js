@@ -26,8 +26,9 @@ const articleRoutes = require('./routes/articles');
 const invoiceRoutes = require('./routes/invoices');
 const itemRoutes = require('./routes/items');
 const unitatRoutes = require('./routes/unitats');
-
-
+const zonaRoutes = require('./routes/zonas');
+const plantaRoutes = require('./routes/plantas');
+const areaRoutes = require('./routes/areas');
 
 
 const MongoDBStore = require('connect-mongo')(session);
@@ -185,6 +186,9 @@ app.use('/articles',articleRoutes);
 app.use('/invoices',invoiceRoutes);
 app.use('/items',itemRoutes);
 app.use('/unitats',unitatRoutes);
+app.use('/zonas',zonaRoutes);
+app.use('/plantas',plantaRoutes);
+app.use('/areas',areaRoutes);
 
 
 

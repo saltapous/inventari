@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate')%>
+
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card mb-3">
+                    <img src="<%= zona.imatge %>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= zona.nom %>
+                        </h5>
+                        <p class="card-text">
+                            <%= zona.descripcio %>
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-zona text-muted"><b>Responsable: </b>
+                            <%= zona.responsable.username %> %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Zona: </b>
+                            <%= zona.zona %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Planta: </b>
+                            <%= zona.planta %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Àrea: </b>
+                            <%= zona.area %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Zona: </b>
+                            <%= zona.zona %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Planta: </b>
+                            <%= zona.planta %>
+                        </li>
+                        <li class="list-group-zona text-muted"><b>Preu de cost: </b>
+                            <%= zona.preu %>€
+                        </li>
+                    </ul>
+                    <% if( currentUser && zona.responsable.equals(currentUser.id)) { %>
+                    <div class="card-body">
+                        <a href="/zonas/<%=zona.id%>/edit" class="card-link btn btn-info" class="card-link">Editar
+                            Zona</a>
+                        <form class="d-inline" action="/zonas/<%=zona._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Esborrar Zona</button>
+                        </form>
+                    </div>
+                    <% } %>
+                    <div class="card-footer text-muted">
+                        <a href="/zonas">Totes les zonas</a>
+                    </div>
+                </div>
+            </div>

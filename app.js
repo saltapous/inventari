@@ -29,6 +29,7 @@ const unitatRoutes = require('./routes/unitats');
 const zonaRoutes = require('./routes/zonas');
 const plantaRoutes = require('./routes/plantas');
 const areaRoutes = require('./routes/areas');
+const utilitatRoutes = require('./routes/utilitats');
 
 
 const MongoDBStore = require('connect-mongo')(session);
@@ -189,6 +190,7 @@ app.use('/unitats',unitatRoutes);
 app.use('/zonas',zonaRoutes);
 app.use('/plantas',plantaRoutes);
 app.use('/areas',areaRoutes);
+app.use('/utilitats',utilitatRoutes);
 
 
 

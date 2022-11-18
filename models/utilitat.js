@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ZonaSchema = new Schema({
+const UtilitatSchema = new Schema({
 
 
 
@@ -14,4 +14,4 @@ const ZonaSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('Zona', ZonaSchema);
+module.exports = mongoose.model('Utilitat', UtilitatSchema);

@@ -142,17 +142,16 @@ const Joi = BaseJoi.extend(extension)
             //observacions: Joi.string().escapeHTML(),
             //username: Joi.string().required().escapeHTML(),
             //zona: Joi.string().required().escapeHTML(),
-            //planta: Joi.string().required().escapeHTML(),
-            //area: Joi.string().required().escapeHTML(),
-            tipus: Joi.string().required().escapeHTML(),
-            naturalesa: Joi.string().required().escapeHTML(),
+            planta: Joi.string().required().escapeHTML(),
+            area: Joi.string().required().escapeHTML(),
+            zona: Joi.string().required().escapeHTML(),
             //tipus: Joi.string().required().escapeHTML(),
             //proforma: Joi.number().required().min(1),
             //comanda: Joi.number().required().min(1),
             //albara: Joi.string().required(),
             //factura: Joi.string().required()
             //imatge: Joi.string().escapeHTML(),
-            descripcio: Joi.string().escapeHTML()
+            //descripcio: Joi.string().escapeHTML()
 
         }).required()
     });

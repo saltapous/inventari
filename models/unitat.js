@@ -8,10 +8,10 @@ const UnitatSchema = new Schema({
     nom: String,
     //preu: Number,
     //unitat: String,
-    imatge: Array,
-    descripcio: String,
-    naturalesa: String,
-    tipus: String,
+    //imatge: Array,
+    planta: String,
+    zona: String,
+    area: String,
 
     responsable: {
         type: Schema.Types.ObjectId,

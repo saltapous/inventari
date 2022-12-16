@@ -9,6 +9,9 @@ router.route('/')
 .get(catchAsync(zonas.index))
 .post(isLoggedIn, validateZona, catchAsync(zonas.createZona))
 
+router.route('/all')
+.get(catchAsync(zonas.getZonas))
+
 router.get('/new', isLoggedIn, zonas.renderNewForm);
 
 router.route('/:id')

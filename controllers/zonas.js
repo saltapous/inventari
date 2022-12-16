@@ -32,6 +32,17 @@ module.exports.showZona =  async (req, res, next) => {
     res.render('zonas/show', { zona });
 }
 
+module.exports.getZonas =  async (req, res, next) => {
+    const zonas = await Zona.find()
+    
+    if (!zonas) {
+        req.flash('error', "No es poden trobar zones!");
+        return
+    }
+    res.json(zonas)
+}
+
+
 module.exports.renderEditForm = async (req, res) => {
     const zona = await Zona.findById(req.params.id);
     if (!zona) {

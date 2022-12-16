@@ -1,0 +1,100 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Nova unitat</h1>
+        <p></p>
+        <p></p>
+        <div class="col-6 offset-3">
+            <form id="formulariet" action="/unitats" method="POST" novalidate class="validated-form">
+
+                <div class="mb-3">
+                    <label class="form-label" for="nom">Nom Unitat</label>
+                    <input class="form-control" type="text" id="nom" name="unitat[nom]" required>
+                    <div class="valid-feedback">Sembla correcte!</div>
+                </div>
+
+                <select id="selectZona" class="form-select mb-3" aria-label="tipus" name="unitat[zona]" required>
+                    <option selected>Escull una zona</option>
+                    <option value="edifici_principal">Edifici Principal</option>
+                    <option value="edifici_enologia">Edifici Enologia</option>
+                    <option value="gimnas">Gimnàs</option>
+                    <option value="esbarjo">Esbarjo</option>
+                    <option value="instal·lacions_vinya">Instal·lacions/Vinya</option>
+                </select>
+
+                <select id="selectPlanta" class="form-select mb-3" aria-label="tipus" name="unitat[planta]" required>
+                    <option selected>Escull una planta</option>
+                    <option value="soterrani">Soterrani</option>
+                    <option value="baixa">Planta baixa</option>
+                    <option value="primera">Primer pis</option>
+                    <option value="segona">Segon pis</option>
+                    <option value="tercera">Tercer Pis</option>
+                    <option value="terrat">Terrat</option>
+                </select>
+
+                <select id="selectArea" class="form-select mb-3" aria-label="tipus" name="unitat[area]" required>
+                    <option selected>Escull una àrea</option>
+                    <option value="docent-alumnes">Docent-Alumnes</option>
+                    <option value="departaments-despatxos-professors">Departaments-Despatxos-Professors</option>
+                    <option value="magatzems-despatxos_operatiuts">Magatzems i Despatxos Operatius</option>
+                    <option value="wc">WC</option>
+                </select>
+
+                <div class="mb-3">
+                    <button class="btn btn-success">Afegeix Unitat</button>
+                </div>
+            </form>
+            <a href="/unitats">Totes les Unitats</a>
+        </div>
+    </div>
+
+    <script>
+
+
+        function crearZones() {
+            const selectZona = document.querySelector('#selectZona');
+            selectZona.addEventListener('click', function link(e) {
+                e.target.removeEventListener(e.type, link);
+                const unitatsDom = document.createElement('div');
+                unitatsDom.innerHTML = '<p> <a href= "../zonas/new" class="link-danger" target="parent">Crear Zona</a>';
+                const formulariet = document.querySelector('#formulariet')
+                formulariet.append(unitatsDom);
+            })
+        }
+
+        const selectPlanta = document.querySelector('#selectPlanta');
+        selectPlanta.addEventListener('click', function link(e) {
+            e.target.removeEventListener(e.type, link);
+            const plantasDom = document.createElement('div');
+            plantasDom.innerHTML = '<p> <a href= "../plantas/new" class="link-info" target="parent">Crear Planta</a>';
+            const formulariet = document.querySelector('#formulariet')
+            formulariet.append(plantasDom);
+        })
+
+        const selectArea = document.querySelector('#selectArea');
+        selectArea.addEventListener('click', function link(e) {
+            e.target.removeEventListener(e.type, link);
+            const areasDom = document.createElement('div');
+            areasDom.innerHTML = '<p> <a href= "../areas/new" class="link-secondary" target="parent">Crear Àrea</a>';
+            const formulariet = document.querySelector('#formulariet')
+            formulariet.append(areasDom);
+        })
+        function llegir() {
+            fetch('../zonas/all')
+                .then(res => res.json())
+                .then(zonas => {
+                    for (let key of zonas) {
+                        console.log(zonas[key]);
+                    }
+                    llegir();
+                })
+
+
+
+
+
+
+
+
+
+        }
+    </script>

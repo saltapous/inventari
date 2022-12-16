@@ -55,6 +55,18 @@
 
 
             <script>
+
+                
+
+                const botoRelative = document.querySelector('#relative');
+
+
+                botoRelative.addEventListener('click',()=>{
+                    console.log(control)
+                })
+
+
+                let control = 'actiu';
                 const albara = [];
                 const proformForm = document.querySelector('#proformForm');
                 const table = document.querySelector('#table');
@@ -142,10 +154,38 @@ albara.push(liniaAenviar);
                     document.querySelector('#naturalesa').value = naturalesa;
                     document.querySelector('#albara').value = JSON.stringify(albara);
 
+console.log('UNITAT =', unitat)
+/*
+const formulariUnitats = document.createElement('form');
+formulariUnitats.setAttribute('id','formulariUnitats');
+formulariUnitats.setAttribute('method','post');
+formulariUnitats.setAttribute('action','/unitats');
 
 
-                    //const cellNaturalesa = row.insertCell();
-                    //const cellTipus = row.insertCell();
+const inputUnitatsUnitat = document.createElement('input');
+inputUnitatsUnitat.setAttribute('name','unitat[nom]');
+inputUnitatsUnitat.setAttribute('value', unitat);
+const inputUnitatsZona = document.createElement('input');
+inputUnitatsZona.setAttribute('name','unitat[zona]');
+inputUnitatsZona.setAttribute('value', 'pendent');
+const inputUnitatsPlanta = document.createElement('input');
+inputUnitatsPlanta.setAttribute('name','unitat[planta]');
+inputUnitatsPlanta.setAttribute('value', 'pendent');
+const inputUnitatsArea = document.createElement('input');
+inputUnitatsArea.setAttribute('name','unitat[area]');
+inputUnitatsArea.setAttribute('value', 'pendent');
+
+formulariUnitats.append(inputUnitatsUnitat);
+formulariUnitats.append(inputUnitatsZona);
+formulariUnitats.append(inputUnitatsPlanta);
+formulariUnitats.append(inputUnitatsArea);
+
+const botoUnitats = document.querySelector('#relative');
+botoUnitats.addEventListener('click', ()=>{
+    formulariUnitats.submit();
+})
+
+            */        
                     const cellInvoice = row.insertCell();
 
 
@@ -161,8 +201,7 @@ albara.push(liniaAenviar);
                     const cellsubtotalLinia = row.insertCell();
                     const cellUnitat = row.insertCell();
 
-                    //cellNaturalesa.innerText = naturalesa;
-                    //cellTipus.innerText = tipus;
+                    
                     cellInvoice.innerText = invoice;
 
 
@@ -210,6 +249,13 @@ albara.push(liniaAenviar);
             </div>
 
         </form>
+
+        
+                
+        
+        
+    
+        
         </body>
 
 <script>
@@ -217,6 +263,8 @@ albara.push(liniaAenviar);
     const itemsInputEl = document.querySelector('#invoicePre')
     const unitatsInputEl = document.querySelector('#unitatPre')
     const _autocomplete = <%- autocomplete %>
+    
+    
 
     fetch('/items/all')
         .then(res => res.json())
@@ -250,6 +298,14 @@ albara.push(liniaAenviar);
         })
         .catch(e => window.alert('No hi ha items encara'))
 
+
+
+
+
+unitatsInputEl.addEventListener('click', ()=>{
+    
+    
+
     fetch('/unitats/all')
         .then(res => res.json())
         .then(unitats => {
@@ -262,6 +318,9 @@ albara.push(liniaAenviar);
                     update(suggestions);
                 },
                 onSelect: function(suggestion) {
+
+                    let control ='inactiu'
+                    console.log(control);
                     const zonaInputEl = document.querySelector('#zonaPre')
                     const plantaInputEl = document.querySelector('#plantaPre')
                     const areaInputEl = document.querySelector('#areaPre')
@@ -285,7 +344,16 @@ albara.push(liniaAenviar);
         .catch(console.log)
         // .catch(e => window.alert('No hi ha unitats encara'))
 
+    })
 
+    unitatsInputEl.addEventListener('click',function link(e){
+        e.target.removeEventListener(e.type, link);
+        const unitatsDom = document.createElement('div');
+        
+        unitatsDom.innerHTML='<p> <a href= "../unitats/new" class="link-danger" target="parent">Crear Unitat</a>' ;
+            
+    const formulariet = document.querySelector('#proformForm')
+    formulariet.append(unitatsDom);
 
-    
+        })
 </script>

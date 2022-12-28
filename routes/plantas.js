@@ -9,6 +9,9 @@ router.route('/')
 .get(catchAsync(plantas.index))
 .post(isLoggedIn, validatePlanta, catchAsync(plantas.createPlanta))
 
+router.route('/all')
+.get(catchAsync(plantas.getPlantas))
+
 router.get('/new', isLoggedIn, plantas.renderNewForm);
 
 router.route('/:id')

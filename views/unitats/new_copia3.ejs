@@ -13,12 +13,11 @@
                 </div>
 
                 <select id="selectZona" class="form-select mb-3" aria-label="tipus" name="unitat[zona]" required>
-                    <option selected>Escull una zona</option>
-                    <option value="edifici_principal">Edifici Principal</option>
-                    <option value="edifici_enologia">Edifici Enologia</option>
-                    <option value="gimnas">Gimnàs</option>
-                    <option value="esbarjo">Esbarjo</option>
-                    <option value="instal·lacions_vinya">Instal·lacions/Vinya</option>
+
+                    <option id="option0" selected>Escull una Zona</option>
+                    <option class="link-danger" id="option1" value="creaZona">Crea una Zona</option>
+
+
                 </select>
 
                 <select id="selectPlanta" class="form-select mb-3" aria-label="tipus" name="unitat[planta]" required>
@@ -50,51 +49,48 @@
     <script>
 
 
-        function crearZones() {
+
+
+        selectZona.addEventListener('click', remove)
+        selectZona.addEventListener('click', llegirTaula)
+        
+        function llegirTaula() {
             const selectZona = document.querySelector('#selectZona');
-            selectZona.addEventListener('click', function link(e) {
-                e.target.removeEventListener(e.type, link);
-                const unitatsDom = document.createElement('div');
-                unitatsDom.innerHTML = '<p> <a href= "../zonas/new" class="link-danger" target="parent">Crear Zona</a>';
-                const formulariet = document.querySelector('#formulariet')
-                formulariet.append(unitatsDom);
-            })
-        }
-
-        const selectPlanta = document.querySelector('#selectPlanta');
-        selectPlanta.addEventListener('click', function link(e) {
-            e.target.removeEventListener(e.type, link);
-            const plantasDom = document.createElement('div');
-            plantasDom.innerHTML = '<p> <a href= "../plantas/new" class="link-info" target="parent">Crear Planta</a>';
-            const formulariet = document.querySelector('#formulariet')
-            formulariet.append(plantasDom);
-        })
-
-        const selectArea = document.querySelector('#selectArea');
-        selectArea.addEventListener('click', function link(e) {
-            e.target.removeEventListener(e.type, link);
-            const areasDom = document.createElement('div');
-            areasDom.innerHTML = '<p> <a href= "../areas/new" class="link-secondary" target="parent">Crear Àrea</a>';
-            const formulariet = document.querySelector('#formulariet')
-            formulariet.append(areasDom);
-        })
-        function llegir() {
             fetch('../zonas/all')
                 .then(res => res.json())
                 .then(zonas => {
-                    for (let key of zonas) {
-                        console.log(zonas[key]);
+                    //console.log(zonas)
+                    for (let zona of zonas) {
+                        //console.log(zona)
+                        const option = document.createElement('option');
+                        option.value = zona.nom;
+                        option.className = 'option';
+                        option.innerText = zona.nom;
+                        selectZona.appendChild(option);
                     }
-                    llegir();
+                    if (this.value == "creaZona") {
+
+                        this.value = '';
+                        window.open('../zonas/new')
+                        // selectZona.removeEventListener('click', link, true);
+                    }
+
                 })
+        }
+        function remove() {
+            const optionsSelectZona = document.querySelectorAll('.option');
 
+            for (let optionsToRemove of optionsSelectZona) {
 
+                // console.log(optionsSelectZona);
+                optionsToRemove.remove();
 
-
-
-
-
-
+            }
 
         }
+
+
+
+
+
     </script>

@@ -4,7 +4,7 @@
         <p></p>
         <p></p>
         <div class="col-6 offset-3">
-            <form id="formulariet" action="/unitats" method="POST" novalidate class="validated-form">
+            <form id="unitats" action="/unitats" method="POST" novalidate class="validated-form">
 
                 <div class="mb-3">
                     <label class="form-label" for="nom">Nom Unitat</label>
@@ -12,14 +12,12 @@
                     <div class="valid-feedback">Sembla correcte!</div>
                 </div>
 
-                <select id="selectZona" class="form-select mb-3" aria-label="tipus" name="unitat[zona]" required>
-                    <option selected>Escull una zona</option>
-                    <option value="edifici_principal">Edifici Principal</option>
-                    <option value="edifici_enologia">Edifici Enologia</option>
-                    <option value="gimnas">Gimnàs</option>
-                    <option value="esbarjo">Esbarjo</option>
-                    <option value="instal·lacions_vinya">Instal·lacions/Vinya</option>
-                </select>
+                <select name="zonas" class="form-select mb-3" aria-label="tipus" id="zonas">
+                    <option value="default" selected>Selecciona una zona</option>
+                    <option id="new" class="text-danger" value="new">Crea una nova zona</option>
+                  </select>
+
+
 
                 <select id="selectPlanta" class="form-select mb-3" aria-label="tipus" name="unitat[planta]" required>
                     <option selected>Escull una planta</option>
@@ -51,76 +49,69 @@
 
 
 
-        const selectZona = document.querySelector('#selectZona');
-        selectZona.addEventListener('click', function link(e) {
-            e.target.removeEventListener(e.type, link);
-            const unitatsDom = document.createElement('div');
-            unitatsDom.setAttribute('id', 'unitatsDom');
-            unitatsDom.innerHTML = '<p> <a href= "../zonas/new" class="link-danger" target="parent">Crear Zona</a>';
-            const formulariet = document.querySelector('#formulariet')
-            formulariet.append(unitatsDom);
-            
-            let plantasDom = document.querySelector('#plantasDom');
-            let areasDom = document.querySelector('#areasDom');
-            plantasDom.remove();
-            areasDom.remove();
-            
-            
-        })
-    
-        const selectPlanta = document.querySelector('#selectPlanta');
-        selectPlanta.addEventListener('click', function link(e) {
-            e.target.removeEventListener(e.type, link);
-            const plantasDom = document.createElement('div');
-            plantasDom.setAttribute('id', 'plantasDom');
-            plantasDom.innerHTML = '<p> <a href= "../plantas/new" class="link-info" target="parent">Crear Planta</a>';
-            const formulariet = document.querySelector('#formulariet')
-            formulariet.append(plantasDom);
-            
-            let unitatsDom = document.querySelector('#unitatsDom');
-            let areasDom = document.querySelector('#areasDom');
-            unitatsDom.remove();
-            areasDom.remove();
-            
-        })
-    
-        const selectArea = document.querySelector('#selectArea');
-        selectArea.addEventListener('click', function link(e) {
-            e.target.removeEventListener(e.type, link);
-            const areasDom = document.createElement('div');
-            areasDom.setAttribute('id', 'areasDom');
-            areasDom.innerHTML = '<p> <a href= "../areas/new" class="link-secondary" target="parent">Crear Àrea</a>';
-            const formulariet = document.querySelector('#formulariet')
-            formulariet.append(areasDom);
-            
-            let unitatsDom = document.querySelector('#unitatsDom');
-            let plantasDom = document.querySelector('#plantasDom');
-            unitatsDom.remove();
-            plantasDom.remove();
-            
+
+        // Main
+    const selectEl = document.querySelector('#zonas')
+    const newSelected = document.querySelector('#zonas')
+
+    appendOptions(selectEl)
+    // ---
+
+    // Listeners
+    selectEl.addEventListener('focus', () => {
+      removeZonaOptions(selectEl)
+      appendOptions(selectEl)
+      blur
     })
+    newSelected.addEventListener('click', ()=>{
+      if (newSelected.value == "new") {
+       
+       selectEl.value = 'default' 
+       console.log (selectEl.value)
+    window.open('../zonas/new')
+   // selectZona.removeEventListener('click', link, true);
+    }
+    })
+    
 
-function llegir(a){
+    // ---
 
- fetch('../zonas/all')
-  
- .then(res => res.json())
+    function removeZonaOptions(targetEl) {
+      const zonaOptionEls = targetEl.querySelectorAll('option.zona')
+      for (const zonaOptionEl of zonaOptionEls) {
+        zonaOptionEl.remove()
+      }
+    }
+
+    function appendOptions(targetEl) {
+      buildOptions()
+        .then(zonaOptionEls => {
+          for (const zonaOptionEl of zonaOptionEls) {
+            targetEl.insertAdjacentElement('beforeend', zonaOptionEl)
+          }
+        })
+    }
+
+    function buildOptions() {
+      return getZonas()
         .then(zonas => {
-//console.log(zonas[a]);
-const linies = [];
-for (zona of zonas){
-    linies.push(zona.nom);
-    
-    
+          const optionEls = zonas.map(zona => {
+            const zonaName = zona.nom
+            const optionEl = document.createElement('option')
+            optionEl.value = zonaName
+            optionEl.innerText = zonaName
+            optionEl.name = zonaName
+            optionEl.classList.add('zona')
+            return optionEl
+          })
+          return optionEls
+        })
+    }
 
-    
-    console.log(linies)
-}
-})
-        
-}
-
-llegir();
+    function getZonas() {
+      return fetch('../zonas/all')
+        .then(res => res.json())
+    }
     </script>
     
 

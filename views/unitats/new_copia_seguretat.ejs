@@ -1,0 +1,77 @@
+<% layout('layouts/boilerplate')%>
+
+  <div class="container">
+    <select name="zonas" id="zonas">
+      <option value="default" selected>Select a zona</option>
+      <option id="new" value="new">Create a zona</option>
+    </select>
+  </div>
+
+
+
+  <script>
+
+        // Main
+    const selectEl = document.querySelector('#zonas')
+    const newSelected = document.querySelector('#zonas')
+
+    appendOptions(selectEl)
+    // ---
+
+    // Listeners
+    selectEl.addEventListener('focus', () => {
+      removeZonaOptions(selectEl)
+      appendOptions(selectEl)
+      blur
+    })
+    newSelected.addEventListener('click', ()=>{
+      if (newSelected.value == "new") {
+       
+       selectEl.value = 'default' 
+       console.log (selectEl.value)
+    window.open('../zonas/new')
+   // selectZona.removeEventListener('click', link, true);
+    }
+    })
+    
+
+    // ---
+
+    function removeZonaOptions(targetEl) {
+      const zonaOptionEls = targetEl.querySelectorAll('option.zona')
+      for (const zonaOptionEl of zonaOptionEls) {
+        zonaOptionEl.remove()
+      }
+    }
+
+    function appendOptions(targetEl) {
+      buildOptions()
+        .then(zonaOptionEls => {
+          for (const zonaOptionEl of zonaOptionEls) {
+            targetEl.insertAdjacentElement('beforeend', zonaOptionEl)
+          }
+        })
+    }
+
+    function buildOptions() {
+      return getZonas()
+        .then(zonas => {
+          const optionEls = zonas.map(zona => {
+            const zonaName = zona.nom
+            const optionEl = document.createElement('option')
+            optionEl.value = zonaName
+            optionEl.innerText = zonaName
+            optionEl.name = zonaName
+            optionEl.classList.add('zona')
+            return optionEl
+          })
+          return optionEls
+        })
+    }
+
+    function getZonas() {
+      return fetch('../zonas/all')
+        .then(res => res.json())
+    }
+
+  </script>

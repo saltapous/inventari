@@ -1,0 +1,118 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Nova unitat</h1>
+        <p></p>
+        <p></p>
+        <div class="col-6 offset-3">
+            <form id="unitats" action="/unitats" method="POST" novalidate class="validated-form">
+
+                <div class="mb-3">
+                    <label class="form-label" for="nom">Nom Unitat</label>
+                    <input class="form-control" type="text" id="nom" name="unitat[nom]" required>
+                    <div class="valid-feedback">Sembla correcte!</div>
+                </div>
+
+                <select name="zonas" id="zonas">
+                    <option value="default" selected>Select a zona</option>
+                    <option id="new" value="new">Create a zona</option>
+                  </select>
+
+
+
+                <select id="selectPlanta" class="form-select mb-3" aria-label="tipus" name="unitat[planta]" required>
+                    <option selected>Escull una planta</option>
+                    <option value="soterrani">Soterrani</option>
+                    <option value="baixa">Planta baixa</option>
+                    <option value="primera">Primer pis</option>
+                    <option value="segona">Segon pis</option>
+                    <option value="tercera">Tercer Pis</option>
+                    <option value="terrat">Terrat</option>
+                </select>
+
+                <select id="selectArea" class="form-select mb-3" aria-label="tipus" name="unitat[area]" required>
+                    <option selected>Escull una àrea</option>
+                    <option value="docent-alumnes">Docent-Alumnes</option>
+                    <option value="departaments-despatxos-professors">Departaments-Despatxos-Professors</option>
+                    <option value="magatzems-despatxos_operatiuts">Magatzems i Despatxos Operatius</option>
+                    <option value="wc">WC</option>
+                </select>
+
+                <div class="mb-3">
+                    <button class="btn btn-success">Afegeix Unitat</button>
+                </div>
+            </form>
+            <a href="/unitats">Totes les Unitats</a>
+        </div>
+    </div>
+
+    <script>
+
+
+
+
+        // Main
+    const selectEl = document.querySelector('#zonas')
+    const newSelected = document.querySelector('#zonas')
+
+    appendOptions(selectEl)
+    // ---
+
+    // Listeners
+    selectEl.addEventListener('focus', () => {
+      removeZonaOptions(selectEl)
+      appendOptions(selectEl)
+      blur
+    })
+    newSelected.addEventListener('click', ()=>{
+      if (newSelected.value == "new") {
+       
+       selectEl.value = 'default' 
+       console.log (selectEl.value)
+    window.open('../zonas/new')
+   // selectZona.removeEventListener('click', link, true);
+    }
+    })
+    
+
+    // ---
+
+    function removeZonaOptions(targetEl) {
+      const zonaOptionEls = targetEl.querySelectorAll('option.zona')
+      for (const zonaOptionEl of zonaOptionEls) {
+        zonaOptionEl.remove()
+      }
+    }
+
+    function appendOptions(targetEl) {
+      buildOptions()
+        .then(zonaOptionEls => {
+          for (const zonaOptionEl of zonaOptionEls) {
+            targetEl.insertAdjacentElement('beforeend', zonaOptionEl)
+          }
+        })
+    }
+
+    function buildOptions() {
+      return getZonas()
+        .then(zonas => {
+          const optionEls = zonas.map(zona => {
+            const zonaName = zona.nom
+            const optionEl = document.createElement('option')
+            optionEl.value = zonaName
+            optionEl.innerText = zonaName
+            optionEl.name = zonaName
+            optionEl.classList.add('zona')
+            return optionEl
+          })
+          return optionEls
+        })
+    }
+
+    function getZonas() {
+      return fetch('../zonas/all')
+        .then(res => res.json())
+    }
+    </script>
+    
+
+

@@ -6,10 +6,7 @@ const AreaSchema = new Schema({
 
     
     nom: String,
-    preu: Number,
-    unitat: String,
-    imatge: Array,
-    descripcio: String,
+    
     //albara: Array,
     //proforma: Array,
     responsable: {

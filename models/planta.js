@@ -6,13 +6,7 @@ const PlantaSchema = new Schema({
 
     
     nom: String,
-    preu: Number,
-    unitat: String,
-    imatge: Array,
-    descripcio: String,
-    //albara: Array,
-    //proforma: Array,
-    responsable: {
+        responsable: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }

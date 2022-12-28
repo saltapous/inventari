@@ -9,6 +9,9 @@ router.route('/')
 .get(catchAsync(areas.index))
 .post(isLoggedIn, validateArea, catchAsync(areas.createArea))
 
+router.route('/all')
+.get(catchAsync(areas.getAreas))
+
 router.get('/new', isLoggedIn, areas.renderNewForm);
 
 router.route('/:id')

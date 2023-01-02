@@ -18,7 +18,7 @@ module.exports.createUnitat = async (req, res, next) => {
     const unitat = new Unitat(unitatBody);
     unitat.responsable = req.user._id;
     await unitat.save();
-    req.flash('success', 'Unitat creat correctament!');
+    req.flash('success', 'Unitat creada correctament!');
     res.redirect(`/unitats/${unitat._id}`);
 }
 

@@ -12,6 +12,7 @@
             <input type="hidden" class="col-1" name="zonaPre" id="zonaPre" placeholder="zona">
             <input type="hidden" class="col-1" name="plantaPre" id="plantaPre" placeholder="planta">
             <input type="hidden" class="col-1" name="areaPre" id="areaPre" placeholder="area">
+            <p class="text-center" id="crear"></p>
 
 
 <!--             <select class="col-2"  name="invoicePre" id="invoicePre">
@@ -35,7 +36,7 @@
                 <p class="h6">línies de comanda</p>
                 <table>
                     <div class="h5">
-                        Total Comanda..... <span class="sumatori-total">0,00€</span>
+                       Total Comanda..... <span class="sumatori-total">0,00€
                     </div>
                 </table>
             </table>
@@ -155,45 +156,8 @@ albara.push(liniaAenviar);
                     document.querySelector('#albara').value = JSON.stringify(albara);
 
 console.log('UNITAT =', unitat)
-/*
-const formulariUnitats = document.createElement('form');
-formulariUnitats.setAttribute('id','formulariUnitats');
-formulariUnitats.setAttribute('method','post');
-formulariUnitats.setAttribute('action','/unitats');
-
-
-const inputUnitatsUnitat = document.createElement('input');
-inputUnitatsUnitat.setAttribute('name','unitat[nom]');
-inputUnitatsUnitat.setAttribute('value', unitat);
-const inputUnitatsZona = document.createElement('input');
-inputUnitatsZona.setAttribute('name','unitat[zona]');
-inputUnitatsZona.setAttribute('value', 'pendent');
-const inputUnitatsPlanta = document.createElement('input');
-inputUnitatsPlanta.setAttribute('name','unitat[planta]');
-inputUnitatsPlanta.setAttribute('value', 'pendent');
-const inputUnitatsArea = document.createElement('input');
-inputUnitatsArea.setAttribute('name','unitat[area]');
-inputUnitatsArea.setAttribute('value', 'pendent');
-
-formulariUnitats.append(inputUnitatsUnitat);
-formulariUnitats.append(inputUnitatsZona);
-formulariUnitats.append(inputUnitatsPlanta);
-formulariUnitats.append(inputUnitatsArea);
-
-const botoUnitats = document.querySelector('#relative');
-botoUnitats.addEventListener('click', ()=>{
-    formulariUnitats.submit();
-})
-
-            */        
+       
                     const cellInvoice = row.insertCell();
-
-
-
-
-
-
-
 
                     const cellQuantitat = row.insertCell();
                     const cellPreu = row.insertCell();
@@ -352,7 +316,7 @@ unitatsInputEl.addEventListener('click', ()=>{
         
         unitatsDom.innerHTML='<p> <a href= "../unitats/new" class="link-danger" target="parent">Crear Unitat</a>' ;
             
-    const formulariet = document.querySelector('#proformForm')
+    const formulariet = document.querySelector('#crear')
     formulariet.append(unitatsDom);
 
         })

@@ -20,7 +20,7 @@ module.exports.createInvoice = async (req, res, next) => {
     const invoice = new Invoice(invoiceBody);
     invoice.responsable = req.user._id;
     await invoice.save();
-    req.flash('success', 'Invoice creat correctament!');
+    req.flash('success', 'Comanda creada correctament!');
     res.redirect(`/invoices/${invoice._id}`);
 }
 

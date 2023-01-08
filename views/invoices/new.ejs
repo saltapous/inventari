@@ -68,7 +68,7 @@
 
 
                 let control = 'actiu';
-                const albara = [];
+                let albara = [];
                 const proformForm = document.querySelector('#proformForm');
                 const table = document.querySelector('#table');
                 var id = 0;
@@ -155,7 +155,6 @@ albara.push(liniaAenviar);
                     document.querySelector('#naturalesa').value = naturalesa;
                     document.querySelector('#albara').value = JSON.stringify(albara);
 
-console.log('UNITAT =', unitat)
        
                     const cellInvoice = row.insertCell();
 
@@ -191,7 +190,22 @@ console.log('UNITAT =', unitat)
                     for (let sumatori of liniesResultats) {
                         sumatoriTotal = sumatoriTotal + sumatori;
                     }
+                    console.log('sumatori total = ', sumatoriTotal);
+
+
+
+if(sumatoriTotal<=0){
+    
+  
+    alert('Comanda buida o amb valor zero, no es pot tramitar!!!')
+
+    window.location.reload()
+    
+}
+
+
                     return (`${sumatoriTotal}€ (IVA inclòs)`);
+                    
                 }
 
                 function deleteRow(row, liniesResultats) {
@@ -200,16 +214,20 @@ console.log('UNITAT =', unitat)
                     const albaraValueArr = JSON.parse(albaraInputEl.value)
                     const albaraValueArrNew = albaraValueArr.filter((_, index) => index !== row.rowIndex)
                     albaraInputEl.value = JSON.stringify(albaraValueArrNew)
+                    
 
                     // Delete row from DOM
                     table.deleteRow(row.rowIndex);
                     subtotalEsborrat = liniesResultats[row.id];
                     liniesResultats[row.id] = 0;
+
+                    // Delete from final albara array
+                    albara = albaraValueArrNew
                 }
             </script>
 
             <div class="mb-3">
-                <button class="btn btn-success">Finalitza Comanda</button>
+                <button id="buttonInvoice" class="btn btn-success">Finalitza Comanda</button>
             </div>
 
         </form>

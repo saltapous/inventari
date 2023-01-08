@@ -9,39 +9,9 @@
                     <input class="form-control" type="text" id="nom" name="planta[nom]" value="<%=planta.nom %>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="planta">Ubicació</label>
-                    <input class="form-control" type="text" id="planta" name="planta[planta]" required
-                        value="<%= planta.planta%>">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="imatge">Imatge Url</label>
-                    <input class="form-control" type="text" id="imatge" name="planta[imatge]"
-                        value="<%= planta.imatge%>">
-                </div>
-
-
-
-                <div class="mb-3">
-                    <label class="form-label" for="preu">Preu de cost</label>
-                    <div class="input-group">
-                        <span class="input-group-text" id="preu-label">€</span>
-                        <input type="number" min="0"  step="0.01" class="form-control" name="planta[preu]" id="preu"
-                            placeholder="0.00" value="<%= planta.preu%>" aria-label="preu"
-                            aria-describedby="preu-label" required>
-                    </div>
-
-                </div>
-
-
-                <div class="mb-3">
-                    <label class="form-label" for="descripcio">Descripció</label>
-                    <textarea class="form-control" type="text" id="descripcio" required
-                        name="planta[descripcio]"><%= planta.descripcio%></textarea>
-                </div>
-                <div class="mb-3">
                     <button class="btn btn-success">Modifica planta</button>
                 </div>
             </form>
-            <a href="/plantas">Totes els Plantas</a>
+            <a href="/plantas">Totes les Plantes</a>
         </div>
     </div>

@@ -5,67 +5,40 @@
 <%= invoice.invoice.length %>
 </p>
             <form id="proformForm" class="form-inline">
-                
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Naturalesa</th>
+                        <th>Tipus</th>
+                        <th>Article</th>
+                        <th>Quantitat</th>
+                        <th>Preu unitari</th>
+                        <th>Tipus IVA</th>
+                        <th>Subtotal</th>
+                        <th>Unitat de destí</th>
+                        
+                    </tr>
+
                 <% for (let linia of invoice.invoice) {  %>
                    
                     
-                
-                   
-                        <input type="text"  style="width:20%"   name="naturalesaPre" id="naturalesaPre"
-                            placeholder=" <%= linia[0] %>">
-                        <input type="text" style="width:20%" class="col-2"  name="tipusPre" id="tipusPre"
-                            placeholder=" <%= linia[1]  %>">
-                        <input type="text" style="width:20%" class="col-2" name="invoicePre" id="invoicePre"
-                            placeholder="<%= linia[2] %>">
-                        <input type="number" style="width:5%" class="col-1"  name="quantitatPre" id="quantitatPre"
-                            placeholder="<%= linia[3] %>">
-                        <input type="number" style="width:5%" class="col-1"  step="0.01" name="preuPre" id="preuPre"
-                            placeholder="<%= linia[4] %>">
-                        <input type="number" style="width:5%" class="col-1"  step="0.01" name="ivaPre" id="ivaPre"
-                            placeholder="<%= linia[5] %>">
-                        <input type="text" style="width:19%" class="col-2"  name="ubicacioPre" id="ubicacioPre"
-                            placeholder="<%= linia[6] %>">
 
+                <tr>
+
+
+                <td><span><%= linia[0] %></span></td>
+                <td><span><%= linia[1]  %></span></td>
+                <td><span><%= linia[2] %></span></td>
+                <td><span><%= linia[3] %> unitat/s</span></td>
+                <td><span><%= linia[4] %> €/u</span></td>
+                <td><span><%= linia[5] %>%</span></td>
+                <td><span><%= linia[3]*linia[4]*(1+linia[5]/100) %>€</span></td>
+                <td><span><%= linia[6] %></span></td>
+                                     </tr>
                             <% } %>
-                        
-                
-                
-
+                                                </table>
             </form>
 
 
-
-
-            <div class="card-body">
-                <h5 class="card-title">
-                    <%= invoice.nom %>
-                </h5>
-                <p class="card-text">
-                    <%= invoice.descripcio %>
-                </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-muted">
-                </li>
-                <li class="list-group-item text-muted"><b>Zona: </b>
-                    <%= invoice.zona %>
-                </li>
-                <li class="list-group-item text-muted"><b>Planta: </b>
-                    <%= invoice.planta %>
-                </li>
-                <li class="list-group-item text-muted"><b>Àrea: </b>
-                    <%= invoice.area %>
-                </li>
-                <li class="list-group-item text-muted"><b>Unitat: </b>
-                    <%= invoice.unitat %>
-                </li>
-                <li class="list-group-item text-muted"><b>Planta: </b>
-                    <%= invoice.planta %>
-                </li>
-                <li class="list-group-item text-muted"><b>Preu de cost: </b>
-                    <%= invoice.preu %>€
-                </li>
-            </ul>
             <% if( currentUser && invoice.responsable.equals(currentUser.id)) { %>
                 <div class="card-body">
                     <a href="/invoices/<%=invoice.id%>/edit" class="card-link btn btn-info" class="card-link">Editar

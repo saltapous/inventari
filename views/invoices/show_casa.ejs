@@ -1,0 +1,71 @@
+<% layout('layouts/boilerplate')%>
+    <p>
+        <b>Responsable: </b>
+        <%= invoice.responsable.username %>
+            <%= invoice.invoice.length %>
+    </p>
+    <form id="proformForm" class="form-inline">
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>Naturalesa</th>
+                <th>Tipus</th>
+                <th>Article</th>
+                <th>Quantitat</th>
+                <th class="numeros">Preu unitari</th>
+                <th class="numeros">Tipus IVA</th>
+                <th class="numeros">Subtotal</th>
+                <th>Unitat de destí</th>
+
+            </tr>
+
+            <% for (let linia of invoice.invoice) { %>
+
+
+
+                <tr>
+
+
+                    <td><span>
+                            <%= linia[0] %>
+                        </span></td>
+                    <td><span>
+                            <%= linia[1] %>
+                        </span></td>
+                    <td><span>
+                            <%= linia[2] %>
+                        </span></td>
+                    <td><span>
+                            <%= linia[3] %> unitat/s
+                        </span></td>
+                    <td class="numeros"><span>
+                            <%= linia[4] %> €/u
+                        </span></td>
+                    <td class="numeros"><span>
+                            <%= linia[5] %>%
+                        </span></td>
+                    <td class="numeros"><span>
+                            <%= linia[3]*linia[4]*(1+linia[5]/100) %>€
+                        </span></td>
+                    <td><span>
+                            <%= linia[6] %>
+                        </span></td>
+                </tr>
+                <% } %>
+        </table>
+    </form>
+
+
+    <% if( currentUser && invoice.responsable.equals(currentUser.id)) { %>
+        <div class="card-body">
+            <a href="/invoices/<%=invoice.id%>/edit" class="card-link btn btn-info" class="card-link">Editar
+                Invoice</a>
+            <form class="d-inline" action="/invoices/<%=invoice._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Esborrar Invoice</button>
+            </form>
+        </div>
+        <% } %>
+            <div class="card-footer text-muted">
+                <a href="/invoices">Tots els invoices</a>
+            </div>
+            </div>
+            </div>

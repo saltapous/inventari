@@ -4,8 +4,10 @@
 <%= invoice.responsable.username %>
 <%= invoice.invoice.length %>
 </p>
+
+<table class="table table-condensed table-striped">
             <form id="proformForm" class="form-inline">
-                <table class="table table-condensed table-striped">
+                
                     <tr>
                         <th>Naturalesa</th>
                         <th>Tipus</th>
@@ -25,19 +27,19 @@
                 <tr>
 
 
-                <td><span><%= linia[0] %></span></td>
-                <td><span><%= linia[1]  %></span></td>
-                <td><span><%= linia[2] %></span></td>
-                <td><span><%= linia[3] %> unitat/s</span></td>
-                <td><span><%= linia[4] %> €/u</span></td>
-                <td><span><%= linia[5] %>%</span></td>
-                <td><span><%= linia[3]*linia[4]*(1+linia[5]/100) %>€</span></td>
-                <td><span><%= linia[6] %></span></td>
+                <td width="10%"><div class="camps"><%= linia[0] %></div></td>
+                <td width="10%"><div class="camps"><%= linia[1] %></div></td>
+                <td width="20%"><div class="camps"><%= linia[2] %></div></td>
+                <td width="10%"><div class="numeros"><%= linia[3] %>unitat/s</div></td>
+                <td width="10%"><div class="numeros"><%= linia[4] %>€/u</div></td>
+                <td width="10%"><div class="numeros"><%= linia[5] %>%</div></td>
+                <td width="10%"><div class="numeros"><%= linia[3]*linia[4]*(1+linia[5]/100) %>€</div></td>
+                <td width="20%"><div class="camps"><%= linia[6] %></div></td>
                                      </tr>
                             <% } %>
-                                                </table>
+                                                
             </form>
-
+</table>
 
             <% if( currentUser && invoice.responsable.equals(currentUser.id)) { %>
                 <div class="card-body">

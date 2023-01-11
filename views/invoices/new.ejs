@@ -1,36 +1,47 @@
 <% layout('layouts/boilerplate')%>
 
     
-    <body>
+<div class="row">
         <h1>Nova adquisició</h1>
         <p></p>
         <p></p>
-        <form id="proformForm">
-            
+
+<table class="table table-condensed table-striped">
+        <form id="proformForm" class="form-inline">
+        
             <input type="hidden" class="col-1" name="naturalesaPre" id="naturalesaPre" placeholder="naturalesa">
             <input type="hidden" class="col-1" name="tipusPre" id="tipusPre" placeholder="tipus">
             <input type="hidden" class="col-1" name="zonaPre" id="zonaPre" placeholder="zona">
             <input type="hidden" class="col-1" name="plantaPre" id="plantaPre" placeholder="planta">
             <input type="hidden" class="col-1" name="areaPre" id="areaPre" placeholder="area">
-            <p class="text-center" id="crear"></p>
+            <tr>
+                                
+                <th>Article</th>
+                <th>Quantitat</th>
+                <th>Preu unitari</th>
+                <th>Tipus IVA</th>
+                <th>Unitat de destí</th>
+                <th></th>
+                
+            </tr>
 
+            <tr>
 
-<!--             <select class="col-2"  name="invoicePre" id="invoicePre">
-                <option selected disabled>Article</option>
-            </select> -->
-            <input type="text" id="invoicePre" name="invoicePre" placeholder="Article" required />
-
-<!--
-            <input type="text" class="col-2" name="invoicePre" id="invoicePre" placeholder="Nom"> 
-            -->
-            <input type="number" class="col-1" name="quantitatPre" id="quantitatPre" placeholder="Quantitat" required>
-            <input type="number" class="col-1" step="0.01" name="preuPre" id="preuPre" placeholder="Preu" required>
-            <input type="number" class="col-1" step="0.01" name="ivaPre" id="ivaPre" placeholder="IVA" required>
-            <input type="text" class="col-2" name="unitatPre" id="unitatPre" placeholder="Unitat de destí" required>
-            <button id="relative" class="btn btn-primary">Afegir a la comanda</button>
+            <td width="25%"><input class="camps" type="text" id="invoicePre" name="invoicePre" required /></td>
+            <td width="10%"><input type="number" class="numeros" name="quantitatPre" id="quantitatPre"  required></td>
+            <td width="10%"><input type="number" class="numeros" step="0.01" name="preuPre" id="preuPre"  required></td>
+            <td width="10%"><input type="number" class="numeros" step="0.01" name="ivaPre" id="ivaPre" placeholder="%     " required></td>
+            <td width="25%"><input type="text" class="camps" name="unitatPre" id="unitatPre" required></td>
+            <td width="20%"><button id="relative" class="btn btn-primary">Afegir a la comanda</button></td>
+            
+        </tr>
+        
+<div class="dretaAbsoluta" id="crear"></div>
         </form>
+</table>
+
         <div class="table-responsive-lg">
-            <table class="table" id="table">
+            <table class="table table-condensed table-striped" id="table">
                 <p></p>
                 <p></p>
                 <p class="h6">línies de comanda</p>
@@ -60,14 +71,8 @@
                 
 
                 const botoRelative = document.querySelector('#relative');
-
-
-                botoRelative.addEventListener('click',()=>{
-                    console.log(control)
-                })
-
-
-                let control = 'actiu';
+                botoRelative.addEventListener('click', createTable)
+                
                 let albara = [];
                 const proformForm = document.querySelector('#proformForm');
                 const table = document.querySelector('#table');
@@ -77,7 +82,9 @@
 
                 // New row submit handler
                 proformForm.addEventListener('submit', submitRowHandler);
-
+/*
+                crearTaula()*/
+                
                 // Submit handler callback
                 function submitRowHandler(e) {
                     e.preventDefault();
@@ -97,12 +104,41 @@
 const liniaAenviar = [naturalesaInput.value, tipusInput.value,invoiceInput.value,quantitatInput.value,preuInput.value,ivaInput.value, unitatInput.value, zonaInput.value, plantaInput.value, areaInput.value];
 albara.push(liniaAenviar);
 
+/*
+function crearTaula(){
+
+const trTitols = document.createElement('tr');
+
+
+const tdQuantitat = document.createElement('td')
+const thQuantitat = document.createElement('th');
+thQuantitat.innerText = 'Quantitat';
+
+const thArticle = document.createElement('th');
+thArticle.innerText = 'Article';
+
+const thPreu = document.createElement('th');
+thPreu.innerText = 'Preu unitari';
+
+const thIva = document.createElement('th');
+thIva.innerText = 'Tipus IVA';
+
+const thUnitat = document.createElement('th');
+thUnitat.innerText = 'Unitat de destí';
+
+trTitols.appendChild(thQuantitat)
+table.appendChild(trTitols)
+
+
+}
+
+*/
 
 
 
 
                     // Afegim nou row i retornem row
-                    const row = addRow(naturalesaInput.value, tipusInput.value, invoiceInput.value, new Number(quantitatInput.value), new Number(preuInput.value), new Number(ivaInput.value), unitatInput.value);
+                    const row = addRow(naturalesaInput.value, tipusInput.value, invoiceInput.value, new Number(quantitatInput.value).toFixed(0), new Number(preuInput.value).toFixed(2), new Number(ivaInput.value).toFixed(2), unitatInput.value);
 
                     // Row click listener -> Delete row
                     row.addEventListener('click', () => {
@@ -155,17 +191,27 @@ albara.push(liniaAenviar);
                     document.querySelector('#naturalesa').value = naturalesa;
                     document.querySelector('#albara').value = JSON.stringify(albara);
 
-       
-                    const cellInvoice = row.insertCell();
-
                     const cellQuantitat = row.insertCell();
-                    const cellPreu = row.insertCell();
-                    const cellIva = row.insertCell();
-                    const cellsubtotalLinia = row.insertCell();
-                    const cellUnitat = row.insertCell();
+                    cellQuantitat.class ='numeros';
+                    const cellInvoice = row.insertCell();
+                    cellInvoice.class = 'camps';
 
                     
+                    const cellPreu = row.insertCell();
+                    cellPreu.class = 'numeros';
+                    const cellIva = row.insertCell();
+                    cellIva.class = 'numeros';
+                    const cellsubtotalLinia = row.insertCell();
+                    cellsubtotalLinia.class = 'numeros';
+                    const cellUnitat = row.insertCell();
+                    cellUnitat.class = 'camps';
+
+                    
+                    
+
                     cellInvoice.innerText = invoice;
+
+                    
 
 
 
@@ -175,7 +221,7 @@ albara.push(liniaAenviar);
                     cellUnitat.innerText = unitat;
 
                     const totalLinia = getRowTotal(quantitat, preu, iva)
-                    cellsubtotalLinia.innerText = totalLinia;
+                    cellsubtotalLinia.innerText = totalLinia.toFixed(2);
                     id++
                     return row
                 }
@@ -190,7 +236,7 @@ albara.push(liniaAenviar);
                     for (let sumatori of liniesResultats) {
                         sumatoriTotal = sumatoriTotal + sumatori;
                     }
-                    console.log('sumatori total = ', sumatoriTotal);
+                    
 
 
 
@@ -204,9 +250,31 @@ if(sumatoriTotal<=0){
 }
 
 
-                    return (`${sumatoriTotal}€ (IVA inclòs)`);
+                    return (`${sumatoriTotal.toFixed(2)}€ (IVA inclòs)`);
                     
                 }
+
+
+                function createTable(e){
+
+e.target.removeEventListener(e.type, createTable);
+// Después ingresamos un código a ejecutar
+
+
+
+const tr1 = document.createElement('tr')
+const thArticle = document.createElement('th')
+thArticle.innerText = 'Article'
+tr1.appendChild(thArticle)
+
+const thQuantitat = document.createElement('th')
+thQuantitat.innerText = 'Quantitat'
+tr1.appendChild(thQuantitat)
+table.appendChild(tr1)
+
+
+}
+
 
                 function deleteRow(row, liniesResultats) {
                     // Delete row from albara form field
@@ -234,11 +302,11 @@ if(sumatoriTotal<=0){
 
         
                 
-        
+        </div>
         
     
         
-        </body>
+        
 
 <script>
     
@@ -301,8 +369,8 @@ unitatsInputEl.addEventListener('click', ()=>{
                 },
                 onSelect: function(suggestion) {
 
-                    let control ='inactiu'
-                    console.log(control);
+                    
+                    
                     const zonaInputEl = document.querySelector('#zonaPre')
                     const plantaInputEl = document.querySelector('#plantaPre')
                     const areaInputEl = document.querySelector('#areaPre')

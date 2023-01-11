@@ -27,3 +27,7 @@
     background-color: powderblue;
     font-weight: bold;
 }
+
+.numeros {
+    text-align: right;
+}

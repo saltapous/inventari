@@ -1,8 +1,10 @@
 <% layout('layouts/boilerplate')%>
 <p>
 <b>Responsable: </b>
+
+<!--
 <%= invoice.responsable.username %>
-<%= invoice.invoice.length %>
+-->
 </p>
 
 <table class="table table-condensed table-striped">
@@ -33,7 +35,7 @@
                 <td width="10%"><div class="numeros"><%= linia[3] %>unitat/s</div></td>
                 <td width="10%"><div class="numeros"><%= linia[4] %>€/u</div></td>
                 <td width="10%"><div class="numeros"><%= linia[5] %>%</div></td>
-                <td width="10%"><div class="numeros"><%= linia[3]*linia[4]*(1+linia[5]/100) %>€</div></td>
+                <td width="10%"><div class="numeros"><%= (linia[3]*linia[4]*(1+linia[5]/100)).toFixed(2) %>€</div></td>
                 <td width="20%"><div class="camps"><%= linia[6] %></div></td>
                                      </tr>
                             <% } %>
